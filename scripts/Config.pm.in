@@ -47,8 +47,6 @@
 # Settings ==============================
 $fclf = '@FULLCONTEXT_FORMAT@';
 $fclv = '@FULLCONTEXT_VERSION@';
-$dset = '@DATASET@';
-$spkr = '@SPEAKER@';
 $qnum = '@QNUM@';
 $ver  = '@VER@';
 

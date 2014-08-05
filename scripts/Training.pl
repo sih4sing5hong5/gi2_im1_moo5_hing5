@@ -704,7 +704,7 @@ if ($CONVM) {
    make_lpf();
 
    # make HTS voice
-   make_htsvoice( "$voice", "${dset}_${spkr}" );
+   make_htsvoice( "$voice", "ver${ver}" );
 }
 
 # hts_engine (synthesizing waveforms using hts_engine)
@@ -715,7 +715,7 @@ if ($ENGIN) {
    mkdir ${dir}, 0755;
 
    # hts_engine command line & options
-   $hts_engine = "$ENGINE -m ${voice}/${dset}_${spkr}.htsvoice ";
+   $hts_engine = "$ENGINE -m ${voice}/ver${ver}.htsvoice ";
    if ( !$useGV ) {
       if ( $gm == 0 ) {
          $hts_engine .= "-b " . ( $pf_mcp - 1.0 ) . " ";

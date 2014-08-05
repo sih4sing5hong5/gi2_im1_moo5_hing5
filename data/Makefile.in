@@ -42,10 +42,6 @@
 # POSSIBILITY OF SUCH DAMAGE.                                       #
 # ----------------------------------------------------------------- #
 
-# setting
-SPEAKER = @SPEAKER@
-DATASET = @DATASET@
-
 # awk and perl
 AWK  = @AWK@
 PERL = @PERL@
@@ -93,7 +89,7 @@ mgc:
 	mkdir -p mgc
 
 	SAMPKHZ=`echo $(SAMPFREQ) | $(X2X) +af | $(SOPR) -m 0.001 | $(X2X) +fa`; \
-	for raw in raw/$(DATASET)_$(SPEAKER)_*.raw; do \
+	for raw in raw/*.raw; do \
 		base=`basename $${raw} .raw`; \
 		min=`$(X2X) +sf $${raw} | $(MINMAX) | $(X2X) +fa | head -n 1`; \
 		max=`$(X2X) +sf $${raw} | $(MINMAX) | $(X2X) +fa | tail -n 1`; \
@@ -128,7 +124,7 @@ lf0:
 	mkdir -p lf0
 
 	SAMPKHZ=`echo $(SAMPFREQ) | $(X2X) +af | $(SOPR) -m 0.001 | $(X2X) +fa`; \
-	for raw in raw/$(DATASET)_$(SPEAKER)_*.raw; do \
+	for raw in raw/*.raw; do \
 		base=`basename $${raw} .raw`; \
 		min=`$(X2X) +sf $${raw} | $(MINMAX) | $(X2X) +fa | head -n 1`; \
 		max=`$(X2X) +sf $${raw} | $(MINMAX) | $(X2X) +fa | tail -n 1`; \
@@ -152,7 +148,7 @@ cmp:
 		MGCWINDIM=`expr $(NMGCWIN) \* $${MGCDIM}`; \
 		LF0WINDIM=`expr $(NLF0WIN) \* $${LF0DIM}`; \
 		BYTEPERFRAME=`expr 4 \* \( $${MGCWINDIM} + $${LF0WINDIM} \)`; \
-		for mgc in mgc/$(DATASET)_$(SPEAKER)_*.mgc; do \
+		for mgc in mgc/*.mgc; do \
 			base=`basename $${mgc} .mgc`; \
 			MGCWINS=""; \
 			LF0WINS=""; \
@@ -180,17 +176,17 @@ cmp:
 mlf:
 	# Generating monophone and fullcontext Master Label Files (MLF)
 	echo "#!MLF!#" > labels/mono.mlf
-	echo "\"*/$(DATASET)_$(SPEAKER)_*.lab\" -> \"@PWD@/data/labels/mono\"" >> labels/mono.mlf
+	echo "\"*/*.lab\" -> \"@PWD@/data/labels/mono\"" >> labels/mono.mlf
 
 	echo "#!MLF!#" > labels/full.mlf
-	echo "\"*/$(DATASET)_$(SPEAKER)_*.lab\" -> \"@PWD@/data/labels/full\"" >> labels/full.mlf
+	echo "\"*/*.lab\" -> \"@PWD@/data/labels/full\"" >> labels/full.mlf
 
 list:
 	# Generating a fullcontext model list file
 	mkdir -p lists
 
 	rm -f tmp
-	for lab in labels/full/$(DATASET)_$(SPEAKER)_*.lab; do \
+	for lab in labels/full/*.lab; do \
 		if [ -s $${lab} -a -s labels/mono/`basename $${lab}` -a -s cmp/`basename $${lab} .lab`.cmp ]; then \
 			sed -e "s/.* //g" $${lab} >> tmp; \
 		fi \
@@ -209,7 +205,7 @@ list:
 
 	# Generating a monophone list file
 	rm -f tmp
-	for lab in labels/mono/$(DATASET)_$(SPEAKER)_*.lab; do \
+	for lab in labels/mono/*.lab; do \
 		if [ -s $${lab} -a -s labels/full/`basename $${lab}` -a -s cmp/`basename $${lab} .lab`.cmp ]; then \
 			sed -e "s/.* //g" $${lab} >> tmp; \
 		fi \
@@ -222,7 +218,7 @@ scp:
 	mkdir -p scp
 
 	rm -f scp/train.scp
-	for cmp in @PWD@/data/cmp/$(DATASET)_$(SPEAKER)_*.cmp; do \
+	for cmp in @PWD@/data/cmp/*.cmp; do \
 		if [ -s $${cmp} -a -s labels/mono/`basename $${cmp} .cmp`.lab -a -s labels/full/`basename $${cmp} .cmp`.lab ]; then \
 			echo $${cmp} >> scp/train.scp; \
 		fi \

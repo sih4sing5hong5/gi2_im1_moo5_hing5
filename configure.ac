@@ -298,23 +298,6 @@ AC_SUBST(FULLCONTEXT_VERSION)
 
 
 
-# speaker and dataset names
-AC_ARG_VAR([DATASET],[dataset (default=nitech_jp_atr503)])
-AC_ARG_VAR([SPEAKER],[speaker name (default=m001)])
-
-if test -z "$DATASET"; then
-	DATASET=nitech_jp_atr503
-fi
-
-if test -z "$SPEAKER"; then
-	SPEAKER=m001
-fi
-
-AC_SUBST(DATASET)
-AC_SUBST(SPEAKER)
-
-
-
 # version number and question set name
 AC_ARG_VAR([VER],[version number of this setting (default=1)])
 AC_ARG_VAR([QNUM],[question set number (default='001')])
