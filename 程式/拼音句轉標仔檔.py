@@ -11,7 +11,7 @@ class 拼音句轉標仔檔(腳本程式):
 	_分析器 = 拆文分析器()
 	_家私 = 轉物件音家私()
 	_轉合成標仔 = 句物件轉合成標仔()
-	def 轉(self, 拼音, 拼音句檔名, 標仔資料夾):
+	def 轉(self, 拼音, 語言拼音, 拼音句檔名, 標仔資料夾):
 		os.makedirs(標仔資料夾, exist_ok=True)
 		完整標仔夾 = self.細項目錄(標仔資料夾, '完整標仔')
 		主要標仔夾 = self.細項目錄(標仔資料夾, '主要標仔')
@@ -22,9 +22,11 @@ class 拼音句轉標仔檔(腳本程式):
 				raise RuntimeError('格式愛：音檔名///拼音句')
 			if 音檔名.endswith('.wav'):
 				音檔名 = 音檔名[:-4]
-			處理減號 = self._粗胚.建立物件語句前減號變標點符號(拼音, 拼音句)
+			處理減號 = self._粗胚.建立物件語句前處理減號(拼音, 拼音句)
 			try:
-				句物件 = self._分析器.產生對齊句(處理減號, 處理減號)
+# 				句物件 = self._分析器.產生對齊句(處理減號, 處理減號)
+				# ^佮+是分析器問題，先暫時按呢用
+				句物件 = self._分析器.產生對齊句(處理減號.replace('^', '').replace('+', ''), 處理減號)
 			except:
 				raise RuntimeError('語句分析器有問題，請共問題回報到：\
 https://github.com/sih4sing5hong5/tai5_uan5_gian5_gi2_kang1_ku7/issues')
@@ -32,7 +34,12 @@ https://github.com/sih4sing5hong5/tai5_uan5_gian5_gi2_kang1_ku7/issues')
 				標準句物件 = self._家私.轉音(拼音, 句物件)
 			except:
 				raise RuntimeError('有拼音無合法')
-			完整標仔 = self._轉合成標仔.句物件轉標仔(標準句物件, 加短恬=False)
+			try:
+				音值句物件 = self._家私.轉音(語言拼音, 標準句物件, 函式='音值')
+			except:
+				raise RuntimeError('轉音值有問題，請共問題回報到：\
+https://github.com/sih4sing5hong5/tai5_uan5_gian5_gi2_kang1_ku7/issues')
+			完整標仔 = self._轉合成標仔.句物件轉標仔(音值句物件, 加短恬=False)
 			完整標仔檔名 = os.path.join(完整標仔夾, 音檔名 + '.lab')
 			self.陣列寫入檔案(完整標仔檔名, 完整標仔)
 			主要標仔 = self._轉合成標仔.提出標仔主要音值(完整標仔)
