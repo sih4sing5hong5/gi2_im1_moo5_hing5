@@ -1,10 +1,10 @@
 import os
-from 語音辨識.模型訓練 import 模型訓練
-from 語音辨識.辨識模型 import 辨識模型
+from 臺灣言語工具.語音辨識.模型訓練 import 模型訓練
+from 臺灣言語工具.語音辨識.辨識模型 import 辨識模型
 
 if __name__ == '__main__':
 	訓練 = 模型訓練()
-	這馬目錄 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	這馬目錄 = os.path.dirname(os.path.abspath(__file__))
 	資料目錄 = os.path.join(這馬目錄, 'data')
 	音檔目錄 = os.path.join(這馬目錄, 'wav')
 	標仔目錄 = os.path.join(這馬目錄, 'labels')
