@@ -1,11 +1,9 @@
 __pycache__/
 *.pyc
-CKIPClient.log
-/dist
-/build
-/MANIFEST
-*.hed
-labels*
 wav
-data
-tiong1
+label*
+拼音句
+聲韻對照檔.dict
+/原始標仔
+/辨識資料
+/data
