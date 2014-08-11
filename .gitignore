@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+wav
+label*
+拼音句
+聲韻對照檔.dict
+/原始標仔
+/辨識資料
+/data
