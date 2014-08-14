@@ -100,7 +100,7 @@ class 對齊合成(腳本程式):
 			參數量 = 40
 		HTS設定指令 = '''LANG=c ./configure --with-sptk-search-path={0} \
 --with-hts-search-path={1} \
---with-hts-engine-search-path={2} \ 
+--with-hts-engine-search-path={2} \
 LOWERF0=60 UPPERF0=500 SAMPFREQ={3} FRAMELEN={4} FRAMESHIFT={5} \
 GAMMA=3 LNGAIN=1 MGCORDER={6} USEGV=0'''\
 			.format(SPTK執行檔路徑, HTS執行檔路徑, HTS_ENGINE執行檔路徑,
