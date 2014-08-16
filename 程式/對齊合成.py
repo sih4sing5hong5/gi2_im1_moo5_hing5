@@ -14,6 +14,9 @@ from 臺灣言語工具.語音合成.決策樹仔問題.閩南語決策樹仔 im
 from 臺灣言語工具.語音合成.決策樹仔問題.客家話決策樹仔 import 客家話決策樹仔
 import wave
 from 臺灣言語工具.語音合成.音檔頭前表 import 音檔頭前表
+from 臺灣言語工具.音標系統.官話.官話注音符號 import 官話注音符號
+from 臺灣言語工具.語音辨識.文本音值對照表.官話文本音值表 import 官話文本音值表
+from 臺灣言語工具.語音合成.決策樹仔問題.官話決策樹仔 import 官話決策樹仔
 
 class 對齊合成(腳本程式):
 	def 訓練合成模型(self, 音檔目錄, 拼音句檔名, 標仔拼音,
@@ -28,6 +31,10 @@ class 對齊合成(腳本程式):
 			語言拼音 = 臺灣客家話拼音
 			文本音值表 = 客家話文本音值表()
 			決策樹仔 = 客家話決策樹仔()
+		elif 標仔拼音 in [官話注音符號]:
+			語言拼音 = 官話注音符號
+			文本音值表 = 官話文本音值表()
+			決策樹仔 = 官話決策樹仔()
 		else:
 			raise RuntimeError('拼音無佇工具內底')
 		
@@ -93,7 +100,7 @@ class 對齊合成(腳本程式):
 			參數量 = 40
 		HTS設定指令 = '''LANG=c ./configure --with-sptk-search-path={0} \
 --with-hts-search-path={1} \
---with-hts-engine-search-path={2} \ 
+--with-hts-engine-search-path={2} \
 LOWERF0=60 UPPERF0=500 SAMPFREQ={3} FRAMELEN={4} FRAMESHIFT={5} \
 GAMMA=3 LNGAIN=1 MGCORDER={6} USEGV=0'''\
 			.format(SPTK執行檔路徑, HTS執行檔路徑, HTS_ENGINE執行檔路徑,
