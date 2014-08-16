@@ -99,5 +99,5 @@ GAMMA=3 LNGAIN=1 MGCORDER={6} USEGV=0'''\
 			.format(SPTK執行檔路徑, HTS執行檔路徑, HTS_ENGINE執行檔路徑,
 				頻率, 音框長度, 音框移動, 參數量)
 		self.走指令(HTS設定指令)
-		HTS走指令 = 'make all'
+		HTS走指令 = 'LANG=c make all'
 		self.走指令(HTS走指令)
