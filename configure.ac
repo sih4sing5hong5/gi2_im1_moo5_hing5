@@ -267,20 +267,6 @@ fi
 
 
 
-# hts_engine API
-# hts_engine search path
-AC_ARG_WITH(hts-engine-search-path,
-		AS_HELP_STRING([--with-hts-engine-search-path],[specify the additional hts_engine binary search path]),
-		[hts_engine_search_path=$withval])
-
-# hts_engine
-AC_PATH_PROG([ENGINE], [hts_engine], [:], [${hts_engine_search_path}:$PATH])
-if test ! -f "$ENGINE"; then
-	AC_MSG_ERROR(Can't find hts_engine)
-fi
-
-
-
 # fullcontext label format
 AC_ARG_VAR([FULLCONTEXT_FORMAT],[full context label format (default=HTS_TTS_JPN)])
 AC_ARG_VAR([FULLCONTEXT_VERSION],[version of full context label format (default=1.0)])
